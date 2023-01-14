@@ -2,10 +2,9 @@ package com.barteksmalec.spring5mvcrest.api.v1.mapper;
 
 import com.barteksmalec.spring5mvcrest.api.v1.model.CategoryDTO;
 import com.barteksmalec.spring5mvcrest.domain.Category;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CategoryMapperTest {
 

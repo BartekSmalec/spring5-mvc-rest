@@ -16,7 +16,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -57,7 +56,7 @@ class CategoryControllerTest {
         when(categoryService.getAllCategories()).thenReturn(categoryDTOS);
 
         mockMvc.perform(get("/api/v1/categories/")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.categories", hasSize(2)));
 
@@ -72,7 +71,7 @@ class CategoryControllerTest {
         when(categoryService.getCategoryByName(anyString())).thenReturn(category1);
 
         mockMvc.perform(get("/api/v1/categories/Jim")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(JIM)));
     }

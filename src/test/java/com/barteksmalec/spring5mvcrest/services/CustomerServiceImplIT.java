@@ -60,8 +60,7 @@ public class CustomerServiceImplIT {
 
         assertNotNull(updatedCustomer);
         assertEquals(updatedName, updatedCustomer.getFirstname());
-        //assertThat(originalFirstName, not(equalTo(updatedCustomer.getFirstname())));
-        //assertThat(originalLastName, equalTo(updatedCustomer.getLastname()));
+
         assertThat(originalFirstName).isNotEqualToIgnoringCase(updatedCustomer.getFirstname());
         assertThat(originalLastName).isEqualTo(updatedCustomer.getLastname());
 
@@ -88,9 +87,11 @@ public class CustomerServiceImplIT {
 
         assertNotNull(updatedCustomer);
         assertEquals(updatedName, updatedCustomer.getLastname());
+
         assertThat(originalFirstName).isEqualTo(updatedCustomer.getFirstname());
         assertThat(originalLastName).isNotEqualTo(updatedCustomer.getLastname());
     }
+
     private long getCustomerIdValue() {
         List<Customer> customerList = customerRepository.findAll();
         return customerList.get(0).getId();

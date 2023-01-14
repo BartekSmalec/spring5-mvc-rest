@@ -59,8 +59,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void createNewCustomer()
-    {
+    void createNewCustomer() {
         Customer customer = new Customer();
         customer.setFirstname("Tom");
         customer.setLastname("Riddle");
@@ -68,7 +67,7 @@ class CustomerServiceTest {
 
         when(customerRepository.save(any(Customer.class))).thenReturn(customer);
 
-        CustomerDTO savedDTO =  customerService.createNewCustomer(customerMapper.customerToCustomerDTO(customer));
+        CustomerDTO savedDTO = customerService.createNewCustomer(customerMapper.customerToCustomerDTO(customer));
 
         assertEquals(customer.getId(), savedDTO.getId());
         assertEquals(customer.getFirstname(), savedDTO.getFirstname());
@@ -77,8 +76,7 @@ class CustomerServiceTest {
 
 
     @Test
-    void updateCustomer()
-    {
+    void updateCustomer() {
         Customer customer = new Customer();
         customer.setFirstname("Tom");
         customer.setLastname("Riddle");
@@ -86,7 +84,7 @@ class CustomerServiceTest {
 
         when(customerRepository.save(any(Customer.class))).thenReturn(customer);
 
-        CustomerDTO savedDTO =  customerService.saveCustomerByDTO(1L ,customerMapper.customerToCustomerDTO(customer));
+        CustomerDTO savedDTO = customerService.saveCustomerByDTO(1L, customerMapper.customerToCustomerDTO(customer));
 
         assertEquals(customer.getId(), savedDTO.getId());
         assertEquals(customer.getFirstname(), savedDTO.getFirstname());
@@ -94,7 +92,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void deleteCustomerById(){
+    void deleteCustomerById() {
         Long id = 1L;
         customerService.deleteCustomerById(id);
         verify(customerRepository, times(1)).deleteById(anyLong());

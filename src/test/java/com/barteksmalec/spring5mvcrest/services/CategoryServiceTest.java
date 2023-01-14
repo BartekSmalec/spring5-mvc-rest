@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -37,7 +37,7 @@ class CategoryServiceTest {
 
         when(categoryRepository.findAll()).thenReturn(categories);
 
-        List<CategoryDTO> categoryDTOS =  categoryService.getAllCategories();
+        List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
 
         assertEquals(3, categoryDTOS.size());
     }
