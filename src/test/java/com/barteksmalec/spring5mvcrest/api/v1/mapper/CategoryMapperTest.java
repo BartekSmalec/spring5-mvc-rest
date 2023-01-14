@@ -13,10 +13,6 @@ class CategoryMapperTest {
     public static final long ID = 1L;
     CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void categorytoCategoryDTO() {
         Category category = new Category();

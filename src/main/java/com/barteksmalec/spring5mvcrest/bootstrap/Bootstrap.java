@@ -1,16 +1,20 @@
 package com.barteksmalec.spring5mvcrest.bootstrap;
 
 import com.barteksmalec.spring5mvcrest.domain.Category;
+import com.barteksmalec.spring5mvcrest.domain.Customer;
 import com.barteksmalec.spring5mvcrest.repositories.CategoryRepository;
+import com.barteksmalec.spring5mvcrest.repositories.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final CustomerRepository customerRepository;
 
-    public Bootstrap(CategoryRepository categoryRepository) {
+    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
         this.categoryRepository = categoryRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -37,5 +41,26 @@ public class Bootstrap implements CommandLineRunner {
         categoryRepository.save(nuts);
 
         System.out.println("Category loaded: " + categoryRepository.count());
+
+        Customer joe = new Customer();
+        joe.setFirstname("Joe");
+        joe.setLastname("Buck");
+        joe.setId(1L);
+
+        Customer stephen = new Customer();
+        stephen.setFirstname("Stephen");
+        stephen.setLastname("King");
+        stephen.setId(2L);
+
+        Customer joanne = new Customer();
+        joanne.setFirstname("Joanne");
+        joanne.setLastname("Rowling");
+        joanne.setId(3L);
+
+        customerRepository.save(joe);
+        customerRepository.save(stephen);
+        customerRepository.save(joanne);
+
+        System.out.println("Loaded cutomers: " + customerRepository.count());
     }
 }
