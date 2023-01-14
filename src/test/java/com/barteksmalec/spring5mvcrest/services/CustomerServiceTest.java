@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +22,7 @@ class CustomerServiceTest {
 
     public static final long ID = 1L;
     public static final String FIRSTNAME = "Bartek";
+    CustomerMapper customerMapper = CustomerMapper.INSTANCE;
     CustomerService customerService;
 
     @Mock
@@ -54,5 +56,22 @@ class CustomerServiceTest {
 
         assertEquals(ID, customerDTO.getId());
         assertEquals(FIRSTNAME, customerDTO.getFirstname());
+    }
+
+    @Test
+    void createNewCustomer()
+    {
+        Customer customer = new Customer();
+        customer.setFirstname("Tom");
+        customer.setLastname("Riddle");
+        customer.setId(1L);
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+
+        CustomerDTO savedDTO =  customerService.createNewCustomer(customerMapper.customerToCustomerDTO(customer));
+
+        assertEquals(customer.getId(), savedDTO.getId());
+        assertEquals(customer.getFirstname(), savedDTO.getFirstname());
+        assertEquals(customer.getLastname(), savedDTO.getLastname());
     }
 }
