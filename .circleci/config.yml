@@ -29,12 +29,12 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
 
-       - run:
+      - run:
           name: Upload reports to Codecov
           command: |
           curl -Os https://uploader.codecov.io/latest/linux/codecov
           chmod +x codecov
-          ./codecov -f coverage/codecov-result.json -Z
+          ./codecov
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
