@@ -31,10 +31,7 @@ jobs:
 
       - run:
           name: Upload reports to Codecov
-          command: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
-          chmod +x codecov
-          ./codecov
+          command: curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
