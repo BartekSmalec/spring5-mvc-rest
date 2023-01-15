@@ -31,7 +31,7 @@ class CustomerServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
+        customerService = new CustomerServiceImpl(customerRepository, customerMapper);
     }
 
     @Test

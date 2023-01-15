@@ -10,5 +10,5 @@ public class CustomerDTO {
     private String lastname;
 
     @JsonProperty("customer_url")
-    private String customer_url;
+    private String customerUrl;
 }

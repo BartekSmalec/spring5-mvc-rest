@@ -89,7 +89,7 @@ class CustomerControllerTest {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setId(1L);
         customerDTO.setFirstname(FIRSTNAME);
-        customerDTO.setCustomer_url(API_V_1_CUSTOMERS_1);
+        customerDTO.setCustomerUrl(API_V_1_CUSTOMERS_1);
 
         when(customerService.createNewCustomer(any(CustomerDTO.class))).thenReturn(customerDTO);
 
@@ -110,7 +110,7 @@ class CustomerControllerTest {
         CustomerDTO returnDTO = new CustomerDTO();
         returnDTO.setFirstname(customer.getFirstname());
         returnDTO.setLastname(customer.getLastname());
-        returnDTO.setCustomer_url(API_V_1_CUSTOMERS_1);
+        returnDTO.setCustomerUrl(API_V_1_CUSTOMERS_1);
 
         when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
 
@@ -131,7 +131,7 @@ class CustomerControllerTest {
         CustomerDTO returnDTO = new CustomerDTO();
         returnDTO.setFirstname(customer.getFirstname());
         returnDTO.setLastname("Sanderson");
-        returnDTO.setCustomer_url(API_V_1_CUSTOMERS_1);
+        returnDTO.setCustomerUrl(API_V_1_CUSTOMERS_1);
 
         when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
 

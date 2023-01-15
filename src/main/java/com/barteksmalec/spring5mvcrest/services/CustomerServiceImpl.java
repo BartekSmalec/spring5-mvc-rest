@@ -28,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomer_url(API_V_1_CUSTOMERS + customer.getId());
+                    customerDTO.setCustomerUrl(API_V_1_CUSTOMERS + customer.getId());
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent()) {
             CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customerRepository.findById(id).get());
-            customerDTO.setCustomer_url(API_V_1_CUSTOMERS + id);
+            customerDTO.setCustomerUrl(API_V_1_CUSTOMERS + id);
             return customerDTO;
         }else{
             throw new ResourceNotFoundException("There is not customer with id: " + id);
@@ -51,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerMapper.customerDTOtoCustomer(customerDTO);
         Customer savedCusstomer = customerRepository.save(customer);
         CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCusstomer);
-        returnDto.setCustomer_url(API_V_1_CUSTOMERS + customer.getId());
+        returnDto.setCustomerUrl(API_V_1_CUSTOMERS + customer.getId());
         return returnDto;
     }
 
@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setId(id);
         Customer savedCusstomer = customerRepository.save(customer);
         CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCusstomer);
-        returnDto.setCustomer_url(API_V_1_CUSTOMERS + customer.getId());
+        returnDto.setCustomerUrl(API_V_1_CUSTOMERS + customer.getId());
         return returnDto;
     }
 
@@ -75,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastname(customerDTO.getLastname());
             }
             CustomerDTO returnCustomer = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
-            returnCustomer.setCustomer_url(API_V_1_CUSTOMERS + returnCustomer.getId());
+            returnCustomer.setCustomerUrl(API_V_1_CUSTOMERS + returnCustomer.getId());
 
             return returnCustomer;
         }).orElseThrow(ResourceNotFoundException::new);
