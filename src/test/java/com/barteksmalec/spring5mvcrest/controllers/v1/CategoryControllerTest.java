@@ -1,7 +1,9 @@
 package com.barteksmalec.spring5mvcrest.controllers.v1;
 
 import com.barteksmalec.spring5mvcrest.api.v1.model.CategoryDTO;
+import com.barteksmalec.spring5mvcrest.controllers.RestResponseEntityExceptionHandler;
 import com.barteksmalec.spring5mvcrest.services.CategoryService;
+import com.barteksmalec.spring5mvcrest.services.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CategoryControllerTest {
 
     public static final String JIM = "Jim";
+    public static final String API_V_1_CATEGORIES = "/api/v1/categories/";
     @Mock
     CategoryService categoryService;
 
@@ -37,7 +40,9 @@ class CategoryControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(categoryController)
+                .setControllerAdvice(new RestResponseEntityExceptionHandler())
+                .build();
     }
 
     @Test
@@ -55,7 +60,7 @@ class CategoryControllerTest {
 
         when(categoryService.getAllCategories()).thenReturn(categoryDTOS);
 
-        mockMvc.perform(get("/api/v1/categories/")
+        mockMvc.perform(get(API_V_1_CATEGORIES)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.categories", hasSize(2)));
@@ -74,5 +79,15 @@ class CategoryControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(JIM)));
+    }
+
+    @Test
+    public void testGetByNameNotFound() throws Exception {
+
+        when(categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(API_V_1_CATEGORIES + "Foo")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

@@ -1,7 +1,9 @@
 package com.barteksmalec.spring5mvcrest.controllers.v1;
 
 import com.barteksmalec.spring5mvcrest.api.v1.model.CustomerDTO;
+import com.barteksmalec.spring5mvcrest.controllers.RestResponseEntityExceptionHandler;
 import com.barteksmalec.spring5mvcrest.services.CustomerService;
+import com.barteksmalec.spring5mvcrest.services.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -41,7 +43,9 @@ class CustomerControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(customerController)
+                .setControllerAdvice(new RestResponseEntityExceptionHandler())
+                .build();
     }
 
     @Test
@@ -92,7 +96,7 @@ class CustomerControllerTest {
         mockMvc.perform(post(API_V_1_CUSTOMERS)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customerDTO)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)))
                 .andExpect(jsonPath("$.customer_url", equalTo(API_V_1_CUSTOMERS_1)));
     }
@@ -147,5 +151,13 @@ class CustomerControllerTest {
                 .andExpect(status().isOk());
 
         verify(customerService, times(1)).deleteCustomerById(anyLong());
+    }
+
+    @Test
+    public void testNotFoundException() throws Exception {
+        when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
+        mockMvc.perform(get(API_V_1_CUSTOMERS + "7")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

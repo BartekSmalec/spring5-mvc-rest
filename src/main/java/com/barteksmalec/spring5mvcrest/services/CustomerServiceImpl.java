@@ -7,6 +7,7 @@ import com.barteksmalec.spring5mvcrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,9 +36,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO getCustomerById(Long id) {
-        CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customerRepository.findById(id).get());
-        customerDTO.setCustomer_url(API_V_1_CUSTOMERS + id);
-        return customerDTO;
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(customer.isPresent()) {
+            CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customerRepository.findById(id).get());
+            customerDTO.setCustomer_url(API_V_1_CUSTOMERS + id);
+            return customerDTO;
+        }else{
+            throw new ResourceNotFoundException("There is not customer with id: " + id);
+        }
     }
 
     @Override
@@ -72,7 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
             returnCustomer.setCustomer_url(API_V_1_CUSTOMERS + returnCustomer.getId());
 
             return returnCustomer;
-        }).orElseThrow(RuntimeException::new);
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
