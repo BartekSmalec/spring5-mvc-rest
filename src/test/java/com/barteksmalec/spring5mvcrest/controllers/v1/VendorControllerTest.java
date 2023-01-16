@@ -53,7 +53,8 @@ class VendorControllerTest {
         when(vendorService.getAllVendors()).thenReturn(vendorDTOList);
 
         mockMvc.perform(get(API_V_1_VENDORS)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vendors", hasSize(2)));
     }
@@ -67,7 +68,8 @@ class VendorControllerTest {
         when(vendorService.getVendorById(anyLong())).thenReturn(vendorDTO);
 
         mockMvc.perform(get(API_V_1_VENDORS + "1")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(NAME)));
     }
@@ -83,6 +85,7 @@ class VendorControllerTest {
 
         mockMvc.perform(post(API_V_1_VENDORS)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(vendorDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", equalTo(NAME)))
@@ -104,6 +107,7 @@ class VendorControllerTest {
 
         mockMvc.perform(put(API_V_1_VENDORS + "1")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(vendorDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(NAME)))
@@ -124,6 +128,7 @@ class VendorControllerTest {
 
         mockMvc.perform(patch(API_V_1_VENDORS + "1")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(vendorDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(NAME)))

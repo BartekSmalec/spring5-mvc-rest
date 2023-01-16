@@ -65,7 +65,8 @@ class CustomerControllerTest {
         when(customerService.getAllCustomers()).thenReturn(customerDTOS);
 
         mockMvc.perform(get(API_V_1_CUSTOMERS)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customers", hasSize(2)));
     }
@@ -79,7 +80,8 @@ class CustomerControllerTest {
         when(customerService.getCustomerById(anyLong())).thenReturn(customerDTO);
 
         mockMvc.perform(get(API_V_1_CUSTOMERS_1)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)));
     }
@@ -95,6 +97,7 @@ class CustomerControllerTest {
 
         mockMvc.perform(post(API_V_1_CUSTOMERS)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customerDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)))
@@ -116,6 +119,7 @@ class CustomerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.put(API_V_1_CUSTOMERS_1)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customer)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("Ron")))
@@ -137,6 +141,7 @@ class CustomerControllerTest {
 
         mockMvc.perform(patch(API_V_1_CUSTOMERS_1)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customer)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("Brandon")))
